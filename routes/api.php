@@ -46,7 +46,6 @@ Route::get('/error',function(){
     ],401);
 })->name('login');
 
-// <---------------------------- User Module : Nehal Solanki------------------------------------------->
 
 // User Register && Login Route && LogOut 
 Route::post('/userRegister',[UserController::class,'userRegister']);
@@ -66,7 +65,6 @@ Route::get('/reset-password',[UserController::class,'resetPassword'])->name('pas
 
 
 Route::post('/admin-login',[AdminAuthController::class,'admin_login']);
-// harshvardhan 28 jun logout route
 Route::middleware(['auth:adminApi'])->group(function(){
     Route::get('/admin-logout',[AdminAuthController::class,'admin_logout']);
     Route::get('/admin-profile',[AdminAuthController::class,'admin_profile']);
@@ -74,7 +72,6 @@ Route::middleware(['auth:adminApi'])->group(function(){
     Route::post('/change-admin-password',[AdminAuthController::class,'change_admin_password']);
     Route::resource('/banner',BannersController::class);
 
-    // harshvardhan 1 jul news letter task 
     Route::apiResource('newsletter',NewsLetterController::class);
 
     Route::get('get-setting',[SettingController::class,'getSettingData']);
@@ -82,7 +79,6 @@ Route::middleware(['auth:adminApi'])->group(function(){
     Route::apiResource('customer',CustomerController::class);
     Route::apiResource('language',LanguageController::class);
 
-    //harshvardhan 3 jul
     Route::get('get-cities',[CityController::class,'get_cities']);
     Route::delete('delete-city/{id}',[CityController::class,'delete_city']);
     Route::post('edit-city/{id}',[CityController::class,'edit_city']);
@@ -90,10 +86,8 @@ Route::middleware(['auth:adminApi'])->group(function(){
     Route::apiResource('state',StateController::class);
     Route::apiResource('country',CountryController::class);
 });
-// AdminLogin  && AdminLogout
 
 
-//sunil 28/6
 Route::apiResource('/category',CategoriesController::class);
 Route::post('/category-search',[CategoriesController::class,'SearchCategory']);
 
@@ -101,54 +95,42 @@ Route::apiResource('/sub-category',SubCategoriesController::class);
 Route::post('/sub-category-search',[SubCategoriesController::class,'SearchSubCategory']);
 
 
-// 28/06 Category Show Get Api  Nikunj
 Route::get('/list-category',[CategoriesController::class,'listCategory']);
 Route::post('/add-category',[CategoriesController::class,'addCategory']);
-// 1st July Banner Get Api For front end side Nikunj 
 Route::post('/createbanner',[BannersController::class,'bannerCreate']);
 
 Route::post('/createbanner',[BannersController::class,'bannerCreate']);
 
-// 1st July Banner Get Api For front end side Nikunj 
 Route::get('/home-banner',[BannersController::class,'homeBanner']);
 
-// 28/06 Sub Category Show Get Api Nikunj
 Route::get('/list-subcategory',[SubCategoriesController::class,'listSubCategory']);
 Route::post('add-subcategory',[SubCategoriesController::class,'addSubCategory']);
 
-// 01/07 Add ContactUs Post Api Nikunj 
 
 Route::post('/add-contact',[ContactsController::class,'addContactUs']);
 
-// 01/07 Add NewsLetter Post Api Front Side Nikunj 
 
 Route::post('/add-news-letter',[NewsLetterController::class,'addNewsLetter']);
 Route::get('/show-subcategory',[SubCategoriesController::class,'showSubCategory']);
 
-//sunil 1/7
 
 Route::apiResource('product',ProductController::class);
 
-// 02/07 List Product of featured Nikunj 
 Route::get('/list-featured-product',[ProductController::class,'list_featured_product']);
 Route::get('/get-product/{id}',[ProductController::class,'getProduct']);
 
 
-// <------------------------- Wishlist Module : Nehal Solanki : 2/7/2024 -------------------------> 
 // Add Product , Show , Delete In Wishlist 
 Route::group(['middleware'=>'auth:api'],function(){
     Route::post('/add-product/wishlist/{id}',[WishlistsController::class,'addRemoveProductWishlist']);
     Route::get('/show-product/wishlist',[WishlistsController::class,'showProductWishlists']);
 });
-// <------------------------ Wishlist Module Completed : Nehal Solanki -------------------------->
 
-//sunil 2/7
 Route::apiResource('product-color',ProductColorController::class);
 Route::apiResource('product-size',ProductSizeController::class);
 Route::get('/get-product/{id}',[ProductController::class,'getProduct']);
 
 
-// <-------------------------- Cart Module : Nehal Solanki : 3/7/2024 ------------------------------> 
 Route::group(['middleware'=>'auth:api'],function(){
     Route::post('/add-product/cart/{id}',[CartsController::class,'addProductCart']);
     Route::get('/show-product/cart',[CartsController::class,'showCartProduct']);
