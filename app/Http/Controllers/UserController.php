@@ -54,9 +54,14 @@ class UserController extends Controller
                 );
             }
         } catch (Exception $e) {
+            Log::error('Exception occurred', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return response()->json([
                 'status' => 'warning',
-                'message' => $e,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
         }
     }
