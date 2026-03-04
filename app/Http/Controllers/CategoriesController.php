@@ -152,16 +152,19 @@ class CategoriesController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
 
             $category = Categories::create([
-                'name' => $request->name, 'description' => $request->description, 'category_image' => $imageName, 'is_Active' => true, 'category_slug'=> Str::slug($request->name)
+                'name' => $request->name,
+                'description' => $request->description,
+                'category_image' => $imageName,
+                'is_Active' => true,
+                'category_slug' => Str::slug($request->name)
             ]);
-            if($category){
+            if ($category) {
                 $image->move(public_path('/images/Categories'), $imageName);
                 return response()->json([
                     'success' => true,
                     'category' => $category
                 ], 200);
-            }
-            else{
+            } else {
                 return response()->json([
                     'success' => false,
                     'message' => 'Category is not Added'
@@ -176,13 +179,13 @@ class CategoriesController extends Controller
         }
     }
 
-    // get category list for front end side 
+    // get category list for front end side
 
     public function listCategory()
     {
         try {
 
-            $CategoryWithSubcategory = Categories::select('id', 'name', 'description', 'category_image','category_slug')->with('subcategory:id,category_id,name')->orderBy('id', 'DESC')->get();
+            $CategoryWithSubcategory = Categories::select('id', 'name', 'description', 'category_image', 'category_slug')->with('subcategory:id,category_id,name')->orderBy('id', 'DESC')->get();
             if ($CategoryWithSubcategory) {
                 foreach ($CategoryWithSubcategory as $sub) {
                     $sub['category_image'] = url("/images/Categories/" . $sub->category_image);
@@ -190,7 +193,7 @@ class CategoriesController extends Controller
                 return response()->json([
                     'success' => true,
                     'status' => 200,
-                    'categoryData' => $CategoryWithSubcategory,
+                    'data' => $CategoryWithSubcategory,
                     'message' => 'Category Show successfully'
                 ], 200);
             } else {
