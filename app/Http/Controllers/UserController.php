@@ -62,7 +62,7 @@ class UserController extends Controller
                 'status' => 'warning',
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
-            ]);
+            ], 500);
         }
     }
 
