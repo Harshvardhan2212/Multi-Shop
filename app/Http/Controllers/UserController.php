@@ -54,7 +54,7 @@ class UserController extends Controller
                 );
             }
         } catch (Exception $e) {
-            Log::error('Exception occurred', [
+            \Log::error('Exception occurred', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
