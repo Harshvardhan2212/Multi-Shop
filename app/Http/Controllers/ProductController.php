@@ -343,7 +343,7 @@ dump($id);
                     'success'=>true,
                     'status'=>200,
                     'message'=>'Product Get Successfully',
-                    'product'=>$productlist
+                    'data'=>$productlist
                 ],200);
             }
         }
