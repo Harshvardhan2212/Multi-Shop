@@ -22,7 +22,7 @@ class ProductController extends Controller
         //
         try {
             $product = Product::orderBy('created_at', 'DESC')->with('productReview','productImages')->paginate(10)->makeHidden(['productReview','description', 'category_id', 'sub_category_id', 'sku', 'slug', 'is_featured', 'long_description']);
-       
+
             foreach ($product as $image) {
                 foreach ($image->productImages as $img) {
                     $img->image = url('/images/product/' . $img->image);
@@ -67,7 +67,7 @@ class ProductController extends Controller
 
             // dd($request->all());
             $randomString = fake()->regexify('[A-Z0-9]{10}');
-            //add Product in Product 
+            //add Product in Product
             $product = Product::create([
                 'name' => $request->name,
                 'description' => $request->description,
@@ -160,9 +160,9 @@ class ProductController extends Controller
                 'long_description' => 'required'
             ]);
             $varient = [[5, 2, 500], [4, 2, 300], [3, null, 'unlimited']];
-            
+
             // dd($request->all());
-            //add Product in Product 
+            //add Product in Product
             $product = Product::find($id)->update([
                 'name' => $request->name,
                 'description' => $request->description,
@@ -178,7 +178,7 @@ class ProductController extends Controller
             //add Product in Product Description
 dump($id);
             $productDescription = ProductDescription::where('product_id',$id)->first()->update(['additional_information' => $request->additional_information, 'description' => $request->description]);;
-           
+
        if ($request->hasFile('image')) {
                 $image=ImageProduct::where('product_id',$id)->get();
                 foreach($image as $img){
@@ -257,7 +257,7 @@ dump($id);
             $limit = $request->input('limit');
             $productlist = Product::select('id','name','price')->with('productReview','productImages:id,product_id,image')->where('is_featured',1)->offset(0)->limit(4)->get();
             $productlist = Product::limit($limit)->get()->makeHidden(['productReview','created_at','updated_at','sku','is_featured','long_description','description','slug','isActive','category_id','sub_category_id']);
-            
+
             if($productlist){
                 $images = array();
                 foreach($productlist as $image){
@@ -270,7 +270,7 @@ dump($id);
                     // dd($images[0]);
                 }
                 // $productlist->xyz = $images[0];
-                
+
                 $rating = 0;
                 $productreview = 0;
                 foreach($productlist as $review){
@@ -287,7 +287,7 @@ dump($id);
                     'success'=>true,
                     'status'=>200,
                     'message'=>'Is Feautured Product Get Successfully',
-                    'productData'=>$productlist,
+                    'data'=>$productlist,
                 ]);
             } else {
                 return response()->json(
@@ -347,7 +347,7 @@ dump($id);
                 ],200);
             }
         }
-        catch(Exception $e){
+       catch(Exception $e){
             return response()->json([
                 'success'=>false,
                 'status'=>$e->getCode(),
