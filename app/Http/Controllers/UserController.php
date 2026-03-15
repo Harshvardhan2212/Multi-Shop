@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserLogin;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserRequest;
 use App\Jobs\SendEmailUser;
 use App\Models\User;
@@ -20,6 +21,7 @@ class UserController extends Controller
     public function userRegister(UserRequest $request)
     {
         try {
+            DB::beginTransaction();
             $userAvatar = 'userLogo.png';
             $user = User::create([
                 'first_name' => $request->first_name,
@@ -33,6 +35,7 @@ class UserController extends Controller
 
             if ($user) {
                 SendEmailUser::dispatch($user);
+                DB::commit();
                 return response()->json(
                     [
                         'success' => true,
@@ -54,6 +57,7 @@ class UserController extends Controller
                 );
             }
         } catch (Exception $e) {
+            DB::rollBack();
             \Log::error('Exception occurred', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),

@@ -156,25 +156,25 @@ class CategoriesController extends Controller
                 'description' => $request->description,
                 'category_image' => $imageName,
                 'is_Active' => true,
-                'category_slug' => Str::slug($request->name)
+                'category_slug' => Str::slug($request->name),
             ]);
             if ($category) {
                 $image->move(public_path('/images/Categories'), $imageName);
                 return response()->json([
                     'success' => true,
-                    'category' => $category
+                    'category' => $category,
                 ], 200);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Category is not Added'
+                    'message' => 'Category is not Added',
                 ], 200);
             }
         } catch (Exception $e) {
             return response()->json([
                 'succsess' => false,
                 'message' => 'Category is not get',
-                'error' => $e
+                'error' => $e,
             ]);
         }
     }
@@ -194,19 +194,19 @@ class CategoriesController extends Controller
                     'success' => true,
                     'status' => 200,
                     'data' => $CategoryWithSubcategory,
-                    'message' => 'Category Show successfully'
+                    'message' => 'Category Show successfully',
                 ], 200);
             } else {
                 return response()->json([
                     'success' => false,
                     'status' => 404,
-                    'message' => 'Category Not Found'
+                    'message' => 'Category Not Found',
                 ], 404);
             }
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }

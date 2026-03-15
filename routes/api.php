@@ -42,7 +42,7 @@ Route::get('/error', function () {
     return response()->json([
         'success' => false,
         'status' => 401,
-        'message' => 'Mismatch Token ..'
+        'message' => 'Mismatch Token ..',
     ], 401);
 })->name('login');
 
